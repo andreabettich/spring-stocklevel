@@ -1,4 +1,4 @@
-package ch.services.stocklevel.data;
+package ch.services.stocklevel.data.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

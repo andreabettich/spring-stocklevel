@@ -1,7 +1,8 @@
 package ch.services.stocklevel.controllers;
 
-import ch.services.stocklevel.data.StockLevel;
-import ch.services.stocklevel.data.StockLevelPOJO;
+import ch.services.stocklevel.data.dto.StockLevelDto;
+import ch.services.stocklevel.data.dto.StockUpdateDto;
+import ch.services.stocklevel.data.entity.StockLevel;
 import ch.services.stocklevel.exceptions.ResourceNotFoundException;
 import ch.services.stocklevel.services.StockLevelServiceImpl;
 import com.google.common.base.Preconditions;
@@ -40,7 +41,7 @@ public class StockLevelController {
     @RequestMapping(value = "/test/{product}", method = RequestMethod.GET)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public StockLevelPOJO getTestStockLevelByProduct(@PathVariable("product") final String product) {
+    public StockLevelDto getTestStockLevelByProduct(@PathVariable("product") final String product) {
         Preconditions.checkNotNull(product);
 
         final Map<String, Integer> map = new HashMap<>();
@@ -50,7 +51,7 @@ public class StockLevelController {
         map.put("504", 3);
         map.put("505", 6);
 
-        StockLevelPOJO testStockLevel = new StockLevelPOJO("0000666666", map);
+        StockLevelDto testStockLevel = new StockLevelDto("0000666666", map);
         return testStockLevel;
     }
 
@@ -64,4 +65,13 @@ public class StockLevelController {
         return stockLevelService.createStockLevel(stockLevel);
     }
 
+    @RequestMapping(value = "/{product}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public StockLevel updateStockLevel(@RequestBody final StockUpdateDto stockLevelUpdate,
+                                       @PathVariable("product") final String product) {
+        Preconditions.checkNotNull(stockLevelUpdate);
+
+        return stockLevelService.updateStockLevel(product,stockLevelUpdate.getWarehouse(), stockLevelUpdate.getStock());
+    }
 }
