@@ -3,7 +3,7 @@ package ch.services.stocklevel.controllers;
 import ch.services.stocklevel.data.StockLevel;
 import ch.services.stocklevel.data.StockLevelPOJO;
 import ch.services.stocklevel.exceptions.ResourceNotFoundException;
-import ch.services.stocklevel.services.StockLevelService;
+import ch.services.stocklevel.services.StockLevelServiceImpl;
 import com.google.common.base.Preconditions;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class StockLevelController {
 
     @Resource
-    private StockLevelService stockLevelService;
+    private StockLevelServiceImpl stockLevelService;
 
     @RequestMapping(value = "/{product}", method = RequestMethod.GET)
     @ResponseBody
