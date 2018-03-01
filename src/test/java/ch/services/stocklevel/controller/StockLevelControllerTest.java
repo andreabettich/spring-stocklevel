@@ -30,12 +30,12 @@ public class StockLevelControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void createStockLevel_successfulCreation() throws Exception {
-        //Arrange
+    public void createStockLevel_successful() throws Exception {
+        // Arrange
         given(this.stockLevelService.createStockLevel(any()))
                 .willReturn(STOCK_LEVEL);
 
-        //Act and Assert
+        // Act and Assert
         this.mvc.perform(post("/stocklevel")
                 .content(CORRECT_STOCK_LEVEL_PAYLOAD)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
