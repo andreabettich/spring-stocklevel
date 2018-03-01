@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/stocklevel")
@@ -33,9 +32,12 @@ public class StockLevelController {
     public StockLevel getStockLevelByProduct(@PathVariable("product") final String product) {
         Preconditions.checkNotNull(product);
 
-        final Optional<StockLevel> stockLevel = stockLevelService.getStockLevelByProduct(product);
+        final StockLevel stockLevel = stockLevelService.getStockLevelByProduct(product);
 
-        return stockLevel.orElseThrow(() -> new ResourceNotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
+        if (stockLevel == null)
+            throw new ResourceNotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        return stockLevel;
     }
 
     @RequestMapping(value = "/test/{product}", method = RequestMethod.GET)
@@ -55,7 +57,6 @@ public class StockLevelController {
         return testStockLevel;
     }
 
-
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -72,6 +73,6 @@ public class StockLevelController {
                                        @PathVariable("product") final String product) {
         Preconditions.checkNotNull(stockLevelUpdate);
 
-        return stockLevelService.updateStockLevel(product,stockLevelUpdate.getWarehouse(), stockLevelUpdate.getStock());
+        return stockLevelService.updateStockLevel(product, stockLevelUpdate.getWarehouse(), stockLevelUpdate.getStock());
     }
 }

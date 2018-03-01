@@ -1,4 +1,4 @@
-package ch.services.stocklevel;
+package ch.services.stocklevel.context;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class StocklevelApplicationTests {
+public class ContextTest {
 
 	@Test
 	public void contextLoads() {
