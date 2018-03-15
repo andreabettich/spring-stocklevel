@@ -32,11 +32,11 @@ public class StockLevelControllerTest {
     @Test
     public void createStockLevel_successful() throws Exception {
         // Arrange
-        given(this.stockLevelService.createStockLevel(any()))
+        given(stockLevelService.createStockLevel(any()))
                 .willReturn(STOCK_LEVEL);
 
         // Act and Assert
-        this.mvc.perform(post("/stocklevel")
+        mvc.perform(post("/stocklevel")
                 .content(CORRECT_STOCK_LEVEL_PAYLOAD)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status()
