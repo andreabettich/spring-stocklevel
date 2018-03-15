@@ -3,12 +3,15 @@ buildscript {
         springBootVersion = '2.0.0.RC1'
     }
     repositories {
+        jcenter()
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:+'
+        classpath 'org.akhikhl.gretty:gretty:+'
     }
 }
 
@@ -16,19 +19,26 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'com.google.cloud.tools.appengine'
 
 group = 'ch.services'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 9
+sourceCompatibility = 8
 
 repositories {
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://maven-central.storage.googleapis.com" }
+    jcenter()
 }
 
 
 dependencies {
+    providedCompile('javax.servlet:javax.servlet-api:3.1.0')
+    providedCompile('com.google.appengine:appengine:+')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('redis.clients:jedis:2.9.0')
     compile('org.springframework.data:spring-data-redis:2.0.4.RELEASE')
@@ -36,3 +46,24 @@ dependencies {
     compile('com.google.guava:guava:24.0-jre')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+gretty {
+    httpPort = 8080
+    contextPath = '/'
+    servletContainer = 'jetty9'  // What App Engine Flexible uses
+}
+
+appengine {
+
+    deploy {   // deploy configuration
+        stopPreviousVersion = true  // default - stop the current version
+        promote = true              // default - & make this the current version
+    }
+
+}
+
+group = 'com.example.appengine'   // Generated output GroupId
+version = '1.0-SNAPSHOT'          // Version in generated output
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
