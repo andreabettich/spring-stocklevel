@@ -21,9 +21,9 @@ public class StocklevelApplication {
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName("pub-redis-17872.eu-central-1-1.1.ec2.redislabs.com");
-        config.setPassword(RedisPassword.of("redis-nano-1"));
-        config.setPort(17872);
+        config.setHostName("localhost");
+        //config.setPassword(RedisPassword.of("redis-nano-1"));
+        config.setPort(6379);
         config.setDatabase(0);
 
         final JedisConnectionFactory jedisConnFactory = new JedisConnectionFactory(config, JedisClientConfiguration.builder()
