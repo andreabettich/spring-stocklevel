@@ -1,4 +1,10 @@
-##### Spring based stock level service
+# Spring based stock level service
 
-``./gradlew build``
+## Requirements
+- Java 9
+- Gradle
+- Docker
 
+## Getting started
+- Run `make install` to install all dependencies.
+- Run `make start` to re/build and start the application.
